@@ -107,33 +107,37 @@ OverlaySupportEntry showSimpleNotification(
    * The direction in which the notification can be dismissed.
    */
   DismissDirection? slideDismissDirection,
+  EdgeInsets? padding,
 }) {
   final dismissDirection = slideDismissDirection ??
       (slideDismiss ? DismissDirection.horizontal : DismissDirection.none);
   final entry = showOverlayNotification(
     (context) {
-      return SlideDismissible(
-        direction: dismissDirection,
-        key: ValueKey(key),
-        child: Material(
-          color: background ?? Theme.of(context).colorScheme.secondary,
-          elevation: elevation,
-          child: SafeArea(
-              bottom: position == NotificationPosition.bottom,
-              top: position == NotificationPosition.top,
-              child: ListTileTheme(
-                textColor:
-                    foreground ?? Theme.of(context).colorScheme.onSecondary,
-                iconColor:
-                    foreground ?? Theme.of(context).colorScheme.onSecondary,
-                child: ListTile(
-                  leading: leading,
-                  title: content,
-                  subtitle: subtitle,
-                  trailing: trailing,
-                  contentPadding: contentPadding,
-                ),
-              )),
+      return Padding(
+        padding: padding ?? EdgeInsets.zero,
+        child: SlideDismissible(
+          direction: dismissDirection,
+          key: ValueKey(key),
+          child: Material(
+            color: background ?? Theme.of(context).colorScheme.secondary,
+            elevation: elevation,
+            child: SafeArea(
+                bottom: position == NotificationPosition.bottom,
+                top: position == NotificationPosition.top,
+                child: ListTileTheme(
+                  textColor:
+                      foreground ?? Theme.of(context).colorScheme.onSecondary,
+                  iconColor:
+                      foreground ?? Theme.of(context).colorScheme.onSecondary,
+                  child: ListTile(
+                    leading: leading,
+                    title: content,
+                    subtitle: subtitle,
+                    trailing: trailing,
+                    contentPadding: contentPadding,
+                  ),
+                )),
+          ),
         ),
       );
     },
